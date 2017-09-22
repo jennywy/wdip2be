@@ -18,7 +18,7 @@ class LanguagesController < ApplicationController
     @language = Language.new(language_params)
 
     if @language.save
-      render json: @language, status: :created
+      render json: @language, status: :created, location: @language
     else
       render json: @language.errors, status: :unprocessable_entity
     end
