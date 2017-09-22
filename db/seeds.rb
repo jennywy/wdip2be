@@ -5,6 +5,9 @@
 # db with db:setup).
 #
 # Examples:
-#
+# languages = [
+# "test0",
+# "test1"
+# ]
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
