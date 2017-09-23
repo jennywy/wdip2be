@@ -8,7 +8,6 @@ curl "${API}${URL_PATH}" \
   --header "Content-Type: application/json" \
   --data '{
     "credentials": {
-      "name": "'"${NAME}"'",
       "email": "'"${EMAIL}"'",
       "password": "'"${PASSWORD}"'",
       "password_confirmation": "'"${PASSWORD}"'"
@@ -16,4 +15,3 @@ curl "${API}${URL_PATH}" \
   }'
 
 echo
-# NAME="First" EMAIL="rrr" PASSWORD="PW" sh scripts/sign-up.sh
