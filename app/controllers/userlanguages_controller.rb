@@ -1,5 +1,5 @@
 class UserlanguagesController < OpenReadController
-  before_action :set_example, only: [:update, :destroy]
+  before_action :set_userlanguage, only: [:update, :destroy]
   # GET /userlanguages
   def index
     @userlanguages = Userlanguage.all
