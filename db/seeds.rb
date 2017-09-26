@@ -4,10 +4,6 @@
 # The data can then be loaded with the rake db:seed (or created alongside the
 # db with db:setup).
 #
-# Examples:
-# languages = [
-# "test0",
-# "test1"
-# ]
+languages = Language.create([{ name: "C++" }, { name: "Java" }, { name: "Javascript" }, { name: "R" }, { name: "Ruby" }, { name: "Rails" }, { name: "PHP" }, {name: "Python"}])
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
