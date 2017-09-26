@@ -1,6 +1,5 @@
-class UserlanguagesController < ApplicationController
-  before_action :set_userlanguage, only: [:show, :update, :destroy]
-
+class UserlanguagesController < OpenReadController
+  before_action :set_example, only: [:update, :destroy]
   # GET /userlanguages
   def index
     @userlanguages = Userlanguage.all
@@ -10,12 +9,12 @@ class UserlanguagesController < ApplicationController
 
   # GET /userlanguages/1
   def show
-    render json: @userlanguage
+    render json: Userlanguage.find(params[:id])
   end
 
   # POST /userlanguages
   def create
-    @userlanguage = Userlanguage.new(userlanguage_params)
+    @userlanguage = current_user.userlanguages.build(userlanguage_params)
 
     if @userlanguage.save
       render json: @userlanguage, status: :created
@@ -41,7 +40,7 @@ class UserlanguagesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_userlanguage
-      @userlanguage = Userlanguage.find(params[:id])
+      @userlanguage = current_user.userlanguages.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
