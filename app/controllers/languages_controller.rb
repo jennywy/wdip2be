@@ -15,11 +15,10 @@ class LanguagesController < OpenReadController
 
   # POST /languages
   def create
-    if current_user.admin == true
+    if current_user.admin?
       @language = current_user.languages.build(language_params)
-
       if @language.save
-        render json: @language, status: :created, location: @language
+        render json: @language, status: :created
       else
         render json: @language.errors, status: :unprocessable_entity
       end
@@ -30,7 +29,7 @@ class LanguagesController < OpenReadController
 
   # PATCH/PUT /languages/1
   def update
-    if current_user.admin == true
+    if current_user.admin?
       if @language.update(language_params)
         render json: @language
       else
@@ -43,7 +42,7 @@ class LanguagesController < OpenReadController
 
   # DELETE /languages/1
   def destroy
-    if current_user.admin == true
+    if current_user.admin?
       @language.destroy
     else
       render json: @language.errors, status: :forbidden
@@ -53,9 +52,7 @@ class LanguagesController < OpenReadController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_language
-      if current_user.admin == true
         @language = current_user.languages.find(params[:id])
-      end
     end
 
     # Only allow a trusted parameter "white list" through.
