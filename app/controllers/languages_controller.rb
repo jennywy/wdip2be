@@ -1,5 +1,5 @@
-class LanguagesController < ApplicationController
-  before_action :set_language, only: [:show, :update, :destroy]
+class LanguagesController < OpenReadController
+  before_action :set_language, only: [:update, :destroy]
 
   # GET /languages
   def index
@@ -10,38 +10,52 @@ class LanguagesController < ApplicationController
 
   # GET /languages/1
   def show
-    render json: @language
+    render json: Language.find(params[:id])
   end
 
   # POST /languages
   def create
-    @language = Language.new(language_params)
+    if current_user.admin == true
+      @language = current_user.languages.build(language_params)
 
-    if @language.save
-      render json: @language, status: :created, location: @language
+      if @language.save
+        render json: @language, status: :created, location: @language
+      else
+        render json: @language.errors, status: :unprocessable_entity
+      end
     else
-      render json: @language.errors, status: :unprocessable_entity
+      render json: @language.errors, status: :forbidden
     end
   end
 
   # PATCH/PUT /languages/1
   def update
-    if @language.update(language_params)
-      render json: @language
+    if current_user.admin == true
+      if @language.update(language_params)
+        render json: @language
+      else
+        render json: @language.errors, status: :unprocessable_entity
+      end
     else
-      render json: @language.errors, status: :unprocessable_entity
+      render json: @language.errors, status: :forbidden
     end
   end
 
   # DELETE /languages/1
   def destroy
-    @language.destroy
+    if current_user.admin == true
+      @language.destroy
+    else
+      render json: @language.errors, status: :forbidden
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_language
-      @language = Language.find(params[:id])
+      if current_user.admin == true
+        @language = current_user.languages.find(params[:id])
+      end
     end
 
     # Only allow a trusted parameter "white list" through.
